@@ -64,7 +64,7 @@ export default class ExpensesController {
     return response.created(expense)
   }
 
-  async delete({ auth, response, params }: HttpContext) {
+  async destroy({ auth, response, params }: HttpContext) {
     const user = auth.user!
 
     if (!user) {
@@ -109,7 +109,22 @@ export default class ExpensesController {
     
     const filters = await request.validate({
       schema: filterSchema,
-      data: request.qs()
+      data: request.qs(),
+      messages: {
+        'category.string': 'A categoria deve ser em formato de texto.',
+        'category.maxLength': 'A categoria deve ter no máximo 50 caracteres.',
+
+        'type.enum': 'O tipo de transação deve ser "expense" ou "income".',
+        
+        'minValue.unsigned': 'O valor mínimo não pode ser negativo.',
+        'maxValue.unsigned': 'O valor máximo não pode ser negativo.',
+
+        'year.number': 'O ano deve ser um valor numérico.',
+        'year.range': 'Não existem transações antes do período de 2025.',
+
+        'month.number': 'O mês deve ser um valor númerico',
+        'month.range': 'O mês deve ser um número entre 1 e 12 (janeiro a dezembro).'
+      }
     })
 
     try {
@@ -140,11 +155,25 @@ export default class ExpensesController {
       }
 
       const expenses = await query.orderBy('created_at', 'desc').limit(20)
+      
+      if (expenses.length === 0) {
+        return response.ok("Nenhuma transação registrada com este filtro.")
+      }
+
       return response.ok(expenses)
+
     } catch (error) {
       console.log(error)
     }
   }
 
+  async index({ auth }: HttpContext) {
+    const user = auth.user!
 
+    const userExpenses = await Expense.query()
+    .where('user_id', user.id)
+    .whereNull('deleted_at')
+
+    return userExpenses
+  }
 }
