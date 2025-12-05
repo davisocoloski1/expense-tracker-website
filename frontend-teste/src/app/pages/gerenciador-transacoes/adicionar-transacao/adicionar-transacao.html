@@ -1,0 +1,98 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- TÍTULO -->
+      <div class="mb-4">
+        <h2 class="fw-bold mb-1">Adicionar Transação</h2>
+        <p class="text-muted mb-0">Registre uma nova receita ou despesa</p>
+      </div>
+
+      <!-- CARD -->
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4 p-md-5">
+
+          <!-- TIPO DE TRANSAÇÃO -->
+          <div class="mb-4">
+            <label class="form-label d-block mb-2">Tipo de Transação</label>
+            <div class="d-flex gap-3">
+              <button type="button" class="btn btn-outline-danger flex-fill py-2" (click)="setExpense()">
+                💸 Despesa
+              </button>
+              <button type="button" class="btn btn-outline-secondary flex-fill py-2" (click)="setIncome()">
+                💰 Receita
+              </button>
+            </div>
+          </div>
+
+          <!-- DESCRIÇÃO -->
+          <div class="mb-4">
+            <label class="form-label">Descrição</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Ex: Supermercado, Salário..."
+              formControlName="description"
+            >
+          </div>
+
+          <!-- VALOR -->
+          <div class="mb-4">
+            <label class="form-label">Valor (R$)</label>
+            <div class="input-group">
+              <span class="input-group-text">R$</span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="0,00"
+                formControlName="value"
+              >
+            </div>
+          </div>
+
+          <!-- DATA -->
+          <div class="mb-4">
+            <label class="form-label">Data</label>
+            <div class="input-group">
+              <input
+                type="date"
+                class="form-control"
+                formControlName="date"
+              >
+              <span class="input-group-text">
+                <i class="bi bi-calendar3"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- CATEGORIA (SELECT) -->
+          <div class="mb-4">
+            <label class="form-label">Categoria</label>
+            <select class="form-select">
+              <option selected disabled>Selecione uma categoria</option>
+              <option value="alimentacao">Alimentação</option>
+              <option value="transporte">Transporte</option>
+              <option value="moradia">Moradia</option>
+              <option value="entretenimento">Entretenimento</option>
+              <option value="saude">Saúde</option>
+              <option value="educacao">Educação</option>
+              <option value="compras">Compras</option>
+              <option value="contas">Contas</option>
+              <option value="salario">Salário</option>
+              <option value="outros">Outros</option>
+            </select>
+          </div>
+
+          <!-- BOTÃO SUBMIT -->
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-success btn-lg">
+              + Adicionar Transação
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

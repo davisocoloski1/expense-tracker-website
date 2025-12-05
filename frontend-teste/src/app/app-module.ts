@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Navbar } from './components/navbar/navbar';
 import { AuthModule } from './pages/auth/auth-module';
+import { GerenciadorTransacoesModule } from './pages/gerenciador-transacoes/gerenciador-transacoes-module';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,9 +19,11 @@ import { AuthModule } from './pages/auth/auth-module';
     AppRoutingModule,
     RouterModule,
     AuthModule,
+    GerenciadorTransacoesModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
+    provideHttpClient()
   ],
   bootstrap: [App]
 })

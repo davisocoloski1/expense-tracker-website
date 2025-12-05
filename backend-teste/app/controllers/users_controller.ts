@@ -6,35 +6,51 @@ export default class UsersController {
   async register({ request, response }: HttpContext) {
     try {
       const newUser = schema.create({
-        username: schema.string({}, [
-          rules.minLength(3),
-          rules.maxLength(20),
-          rules.required()
+        nomeCompleto: schema.string({}, [
+          rules.minLength(10),
+          rules.maxLength(150),
+          rules.required(),
         ]),
         email: schema.string({}, [
           rules.email(),
+          rules.required()
+        ]),
+        username: schema.string({}, [
+          rules.minLength(3),
+          rules.maxLength(20),
           rules.required()
         ]),
         password: schema.string({}, [
           rules.minLength(6),
           rules.maxLength(25),
           rules.required()
-        ])
+        ]),
+        password_confirmation: schema.string({}, [
+          rules.required(),
+          rules.confirmed('password')
+        ]),
       })
 
       const data = await request.validate({ 
         schema: newUser,
         messages: {
+            'nomeCompleto.required': 'O campo "Nome completo" é obrigatório.',
+            'nomeCompleto.minLength': 'O campo "Nome completo" deve ter no mínimo 3 caracteres.',
+            'nomeCompleto.maxLength': 'O campo "Nome completo" deve ter no máximo 150 caracteres.',
+
             'username.minLength': 'O nome de usuário deve ter no mínimo 3 caracteres',
             'username.maxLength': 'O nome de usuário deve ter no máximo 20 caracteres',
             'username.required': 'O campo "nome de usuário" é obrigatório.',
 
             'email.email': 'O email informado não é válido.',
-            'email.required': 'O campo "email" é obrigatório.',
+            'email.required': 'O campo "E-mail" é obrigatório.',
 
             'password.minLength': 'A senha deve ter no mínimo 6 caracteres.',
             'password.maxLength': 'A senha deve ter no máximo 20 caracteres.',
-            'password.required': 'O campo "senha" é obrigatório.'
+            'password.required': 'O campo "Senha" é obrigatório.',
+            
+            'password_confirmation.required': 'Você deve confirmar sua senha.',
+            'confirmed': 'As senhas não coincidem.'
         }
     })
 

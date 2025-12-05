@@ -19,11 +19,11 @@
           Faça login na sua conta
         </h3>
 
-        <form>
+        <form [formGroup]="loginForm">
 
           <div class="mb-3">
             <label class="form-label">Seu E-mail</label>
-            <input type="email" class="form-control" placeholder="email@email.com" required>
+            <input type="email" class="form-control" placeholder="email@email.com" formControlName="email" required>
           </div>
 
           <div class="mb-4">
@@ -34,6 +34,7 @@
                 class="form-control"
                 id="senhaLogin"
                 placeholder="Sua senha"
+                formControlName="password"
                 required
               >
               <button class="btn btn-outline-secondary" type="button" id="toggleSenhaLogin">
@@ -42,7 +43,13 @@
             </div>
           </div>
 
-          <button class="btn btn-success btn-lg w-100">
+          @if (errorText) {
+            <div class="alert alert-danger text-center mt-3">
+              {{ errorText }}
+            </div>
+          }
+
+          <button class="btn btn-success btn-lg w-100" (click)="login()">
             Entrar
           </button>
 
